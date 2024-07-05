@@ -21,10 +21,6 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		app.serverError(w, err)
 	}
 
-	for _, snippet := range snippets {
-		fmt.Fprintf(w, "%v\n", snippet)
-	}
-
 	files := []string{
 		"./ui/html/base.html",
 		"./ui/html/partials/nav.html",
