@@ -12,7 +12,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-type snippetCreateFomr struct {
+type snippetCreateForm struct {
 	Title               string `form:"title"`
 	Content             string `form:"content"`
 	Expires             int    `form:"expires"`
@@ -62,7 +62,7 @@ func (app *application) snippetView(w http.ResponseWriter, r *http.Request) {
 func (app *application) snippetCreate(w http.ResponseWriter, r *http.Request) {
 	data := app.newTemplateData(r)
 
-	data.Form = snippetCreateFomr{
+	data.Form = snippetCreateForm{
 		Expires: 365,
 	}
 
@@ -70,7 +70,7 @@ func (app *application) snippetCreate(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) snippetCreatePost(w http.ResponseWriter, r *http.Request) {
-	var form snippetCreateFomr
+	var form snippetCreateForm
 
 	err := app.decodePostForm(r, &form)
 	if err != nil {
