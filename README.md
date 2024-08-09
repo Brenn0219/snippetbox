@@ -47,7 +47,7 @@ Snippetbox permite que os usuários colem e compartilhem trechos de texto, simil
    go mod tidy
    ```
 4. Configure o banco de dados MySQL:
-   ``sh
+   ```sh
    -- Crie um novo banco de dados UTF-8 `snippetbox`.
    CREATE DATABASE snippetbox CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -74,9 +74,9 @@ Snippetbox permite que os usuários colem e compartilhem trechos de texto, simil
 
    -- Comando para acessar o banco:
    mysql -D snippetbox -u web -p
-   ``
+   ```
 5. Para inserir alguns snippets de exemplo:
-   ``sh
+   ```sh
    INSERT INTO snippets (title, content, created, expires) VALUES (
     'An old silent pond',
     'An old silent pond...\nA frog jumps into the pond,\nsplash! Silence again.\n\n– Matsuo Bashō',
@@ -97,9 +97,9 @@ Snippetbox permite que os usuários colem e compartilhem trechos de texto, simil
       UTC_TIMESTAMP(),
       DATE_ADD(UTC_TIMESTAMP(), INTERVAL 7 DAY)
    );
-   ``
+   ```
 6. Crie a tabela de sessões para o gerenciamento de usuários:
-   ``sh
+   ```sh
    USE snippetbox;
 
    CREATE TABLE sessions (
@@ -109,7 +109,7 @@ Snippetbox permite que os usuários colem e compartilhem trechos de texto, simil
    );
 
    CREATE INDEX sessions_expiry_idx ON sessions (expiry);
-   ``
+   ```
 
 7. Inicie o servidor:
    ```sh
