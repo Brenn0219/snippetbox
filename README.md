@@ -46,10 +46,82 @@ Snippetbox permite que os usuários colem e compartilhem trechos de texto, simil
    ```sh
    go mod tidy
    ```
-4. Inicie o servidor:
+4. Configure o banco de dados MySQL:
+   ``sh
+   -- Crie um novo banco de dados UTF-8 `snippetbox`.
+   CREATE DATABASE snippetbox CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+   -- Use o banco de dados `snippetbox`.
+   USE snippetbox;
+
+   -- Crie a tabela `snippets`.
+   CREATE TABLE snippets (
+      id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+      title VARCHAR(100) NOT NULL,
+      content TEXT NOT NULL,
+      created DATETIME NOT NULL,
+      expires DATETIME NOT NULL
+   );
+
+   -- Adicione um índice na coluna created.
+   CREATE INDEX idx_snippets_created ON snippets(created);
+
+   -- Crie um usuário MySQL e conceda permissões.
+   CREATE USER 'web'@'localhost';
+   GRANT SELECT, INSERT, UPDATE, DELETE ON snippetbox.* TO 'web'@'localhost';
+   -- Importante: Troque 'pass' por uma senha de sua escolha.
+   ALTER USER 'web'@'localhost' IDENTIFIED BY 'pass';
+
+   -- Comando para acessar o banco:
+   mysql -D snippetbox -u web -p
+   ``
+5. Para inserir alguns snippets de exemplo:
+   ``sh
+   INSERT INTO snippets (title, content, created, expires) VALUES (
+    'An old silent pond',
+    'An old silent pond...\nA frog jumps into the pond,\nsplash! Silence again.\n\n– Matsuo Bashō',
+    UTC_TIMESTAMP(),
+    DATE_ADD(UTC_TIMESTAMP(), INTERVAL 365 DAY)
+   );
+
+   INSERT INTO snippets (title, content, created, expires) VALUES (
+      'Over the wintry forest',
+      'Over the wintry\nforest, winds howl in rage\nwith no leaves to blow.\n\n– Natsume Soseki',
+      UTC_TIMESTAMP(),
+      DATE_ADD(UTC_TIMESTAMP(), INTERVAL 365 DAY)
+   );
+
+   INSERT INTO snippets (title, content, created, expires) VALUES (
+      'First autumn morning',
+      'First autumn morning\nthe mirror I stare into\nshows my father''s face.\n\n– Murakami Kijo',
+      UTC_TIMESTAMP(),
+      DATE_ADD(UTC_TIMESTAMP(), INTERVAL 7 DAY)
+   );
+   ``
+6. Crie a tabela de sessões para o gerenciamento de usuários:
+   ``sh
+   USE snippetbox;
+
+   CREATE TABLE sessions (
+      token CHAR(43) PRIMARY KEY,
+      data BLOB NOT NULL,
+      expiry TIMESTAMP(6) NOT NULL
+   );
+
+   CREATE INDEX sessions_expiry_idx ON sessions (expiry);
+   ``
+
+7. Inicie o servidor:
    ```sh
    go run cmd/web/*
    ```
+
+## Tecnologias Usadas
+* Go
+* HTML/CSS
+* JavaScript
+* MySQL
+* Curl
 
 ## Recursos
 
