@@ -40,7 +40,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 
 	flash := app.sessionManager.PopString(r.Context(), "flash")
 
-	data := app.newTemplateData(r)
+	data := app.newTemplateData()
 	data.Snippets = snippets
 	data.Flash = flash
 
@@ -68,7 +68,7 @@ func (app *application) snippetView(w http.ResponseWriter, r *http.Request) {
 
 	flash := app.sessionManager.PopString(r.Context(), "flash")
 
-	data := app.newTemplateData(r)
+	data := app.newTemplateData()
 	data.Snippet = snippet
 	data.Flash = flash
 
@@ -76,7 +76,7 @@ func (app *application) snippetView(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) snippetCreate(w http.ResponseWriter, r *http.Request) {
-	data := app.newTemplateData(r)
+	data := app.newTemplateData()
 
 	data.Form = snippetCreateForm{
 		Expires: 365,
@@ -99,7 +99,7 @@ func (app *application) snippetCreatePost(w http.ResponseWriter, r *http.Request
 	form.CheckField(validator.PermittedInt(form.Expires, 1, 7, 365), "expires", "This field must equal 1, 7 or 365")
 
 	if !form.Valid() {
-		data := app.newTemplateData(r)
+		data := app.newTemplateData()
 		data.Form = form
 		app.render(w, http.StatusUnprocessableEntity, "create.html", data)
 		return
@@ -117,7 +117,7 @@ func (app *application) snippetCreatePost(w http.ResponseWriter, r *http.Request
 }
 
 func (app *application) userSignup(w http.ResponseWriter, r *http.Request) {
-	data := app.newTemplateData(r)
+	data := app.newTemplateData()
 	data.Form = userSignupForm{}
 	app.render(w, http.StatusOK, "signup.html", data)
 }
@@ -138,7 +138,7 @@ func (app *application) userSignupPost(w http.ResponseWriter, r *http.Request) {
 	form.CheckField(validator.MinChars(form.Password, 8), "password", "This field must be at least 8 characters long")
 
 	if !form.Valid() {
-		data := app.newTemplateData(r)
+		data := app.newTemplateData()
 		data.Form = form
 		app.render(w, http.StatusUnprocessableEntity, "signup.html", data)
 		return
@@ -149,7 +149,7 @@ func (app *application) userSignupPost(w http.ResponseWriter, r *http.Request) {
 		if errors.Is(err, models.ErrDuplicateEmail) {
 			form.AddFieldError("email", "Email address is already in use")
 
-			data := app.newTemplateData(r)
+			data := app.newTemplateData()
 			data.Form = form
 
 			app.render(w, http.StatusUnprocessableEntity, "signup.html", data)
@@ -164,7 +164,7 @@ func (app *application) userSignupPost(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) userLogin(w http.ResponseWriter, r *http.Request) {
-	data := app.newTemplateData(r)
+	data := app.newTemplateData()
 	data.Form = userLoginForm{}
 	data.Flash = app.sessionManager.PopString(r.Context(), "flash")
 
@@ -184,7 +184,7 @@ func (app *application) userLoginPost(w http.ResponseWriter, r *http.Request) {
 	form.CheckField(validator.NotBlank(form.Password), "password", "This field cannot be blank")
 
 	if !form.Valid() {
-		data := app.newTemplateData(r)
+		data := app.newTemplateData()
 		data.Form = form
 		app.render(w, http.StatusUnprocessableEntity, "login.html", data)
 
@@ -196,7 +196,7 @@ func (app *application) userLoginPost(w http.ResponseWriter, r *http.Request) {
 		if errors.Is(err, models.ErrInvalidCredentials) {
 			form.AddNonFieldError("Email or password is incorrect")
 
-			data := app.newTemplateData(r)
+			data := app.newTemplateData()
 			data.Form = form
 			app.render(w, http.StatusUnprocessableEntity, "login.html", data)
 		} else {
