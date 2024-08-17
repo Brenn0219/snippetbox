@@ -1,10 +1,10 @@
 # Snippetbox
 
-Snippetbox é um aplicativo web desenvolvido em Go, inspirado no livro "Let's Go" de Alex Edwards. Este projeto tem como objetivo ser uma ferramenta de aprendizado para construção de aplicações web em Go, guiando os desenvolvedores através de práticas recomendadas e técnicas modernas.
+O Snippetbox é um aplicativo web que desenvolvi em Go, inspirado no livro "Let's Go" de Alex Edwards. Meu objetivo com este projeto foi criar uma ferramenta de aprendizado para construção de aplicações web em Go, aplicando práticas recomendadas e técnicas modernas.
 
 ## Introdução
 
-Snippetbox permite que os usuários colem e compartilhem trechos de texto, similar ao Pastebin ou GitHub Gists. O projeto é desenvolvido incrementalmente, começando de uma página web simples e evoluindo para uma aplicação completa onde os usuários podem salvar e visualizar snippets. O projeto cobre tópicos essenciais para o desenvolvimento web, como estruturação de projetos, roteamento de solicitações, integração com bancos de dados, processamento de formulários e exibição segura de dados dinâmicos.
+O Snippetbox permite que os usuários colem e compartilhem trechos de texto, de forma semelhante ao Pastebin ou GitHub Gists. Comecei o projeto de forma incremental, partindo de uma página web simples e evoluindo para uma aplicação completa, onde os usuários podem salvar e visualizar snippets. Ao longo do desenvolvimento, abordei tópicos essenciais para o desenvolvimento web, como estruturação de projetos, roteamento de solicitações, integração com bancos de dados, processamento de formulários e exibição segura de dados dinâmicos.
 
 ## Funcionalidades
 
@@ -48,13 +48,10 @@ Snippetbox permite que os usuários colem e compartilhem trechos de texto, simil
    ```
 4. Configure o banco de dados MySQL:
    ```sh
-   -- Crie um novo banco de dados UTF-8 `snippetbox`.
    CREATE DATABASE snippetbox CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-   -- Use o banco de dados `snippetbox`.
    USE snippetbox;
 
-   -- Crie a tabela `snippets`.
    CREATE TABLE snippets (
       id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
       title VARCHAR(100) NOT NULL,
@@ -63,17 +60,11 @@ Snippetbox permite que os usuários colem e compartilhem trechos de texto, simil
       expires DATETIME NOT NULL
    );
 
-   -- Adicione um índice na coluna created.
    CREATE INDEX idx_snippets_created ON snippets(created);
 
-   -- Crie um usuário MySQL e conceda permissões.
    CREATE USER 'web'@'localhost';
    GRANT SELECT, INSERT, UPDATE, DELETE ON snippetbox.* TO 'web'@'localhost';
-   -- Importante: Troque 'pass' por uma senha de sua escolha.
-   ALTER USER 'web'@'localhost' IDENTIFIED BY 'pass';
-
-   -- Comando para acessar o banco:
-   mysql -D snippetbox -u web -p
+   ALTER USER 'web'@'localhost' IDENTIFIED BY 'snippetbox';
    ```
 5. Para inserir alguns snippets de exemplo:
    ```sh
@@ -111,7 +102,20 @@ Snippetbox permite que os usuários colem e compartilhem trechos de texto, simil
    CREATE INDEX sessions_expiry_idx ON sessions (expiry);
    ```
 
-7. Inicie o servidor:
+7. Crie a tabela de usuários para cadastrar novos usuários:
+   ```sh
+   CREATE TABLE users (
+   id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   name VARCHAR(255) NOT NULL,
+   email VARCHAR(255) NOT NULL,
+   hashed_password CHAR(60) NOT NULL,
+   created DATETIME NOT NULL
+   );
+
+   ALTER TABLE users ADD CONSTRAINT users_uc_email UNIQUE (email);
+   ```
+
+8. Inicie o servidor:
    ```sh
    go run cmd/web/*
    ```
