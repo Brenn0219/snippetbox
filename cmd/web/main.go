@@ -10,8 +10,7 @@ import (
 	"os"
 	"time"
 
-	"snippetbox/internal/models"
-
+	"github.com/Brenn0219/snippetbox/internal/models"
 	"github.com/alexedwards/scs/mysqlstore"
 	"github.com/alexedwards/scs/v2"
 	"github.com/go-playground/form/v4"

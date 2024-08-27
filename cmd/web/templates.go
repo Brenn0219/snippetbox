@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"snippetbox/internal/models"
-	"snippetbox/ui"
+	"github.com/Brenn0219/snippetbox/internal/models"
+	"github.com/Brenn0219/snippetbox/ui"
 )
 
 type templateData struct {

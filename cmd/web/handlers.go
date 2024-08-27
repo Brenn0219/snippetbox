@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"snippetbox/internal/models"
-	"snippetbox/internal/validator"
+	"github.com/Brenn0219/snippetbox/internal/models"
+	"github.com/Brenn0219/snippetbox/internal/validator"
 
 	"github.com/julienschmidt/httprouter"
 )

@@ -2,7 +2,8 @@ package main
 
 import (
 	"net/http"
-	"snippetbox/ui"
+
+	"github.com/Brenn0219/snippetbox/ui"
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/justinas/alice"

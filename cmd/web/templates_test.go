@@ -1,9 +1,10 @@
 package main
 
 import (
-	"snippetbox/internal/assert"
 	"testing"
 	"time"
+
+	"github.com/Brenn0219/snippetbox/internal/assert"
 )
 
 func TestHumanDate(t *testing.T) {
