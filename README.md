@@ -15,22 +15,33 @@ O Snippetbox permite que os usuários colem e compartilhem trechos de texto, de 
    - Implementação de contas de usuário, onde apenas usuários registrados podem criar snippets.
 
 3. **Segurança**:
+   - Proteção contra CSRF em formulários.
+   - Implementação de _secure headers_ para maior proteção.
+   - Uso de tokens de sessão e cookies seguros (_httpOnly_, _Secure_, _SameSite_).
    - Configuração de um servidor HTTPS.
-   - Gerenciamento de sessões e autenticação de usuário.
+   - Gerenciamento de sessões e autenticação de usuários.
 
 4. **Roteamento e Manipulação de Solicitações HTTP**:
-   - Encaminhamento de solicitações para manipuladores específicos baseados no caminho da solicitação.
-   - Envio de diferentes respostas HTTP, cabeçalhos e códigos de status.
+   - Encaminhamento de solicitações para manipuladores específicos com base no caminho da solicitação.
+   - Uso de _middlewares_ para autenticação, logging, controle de acesso e tratamento de erros.
+   - Envio de diferentes respostas HTTP, cabeçalhos e códigos de status adequados.
 
 5. **Validação e Processamento de Entradas**:
    - Validação de entradas de usuários a partir de parâmetros de string de consulta de URL.
 
 6. **Estrutura de Projeto**:
-   - Organização sensata e escalável do projeto.
+   - Organização sensata e escalável, seguindo boas práticas para desenvolvimento em Go.
 
 7. **Renderização de Páginas HTML**:
-   - Utilização de herança de modelo para manter a marcação livre de código duplicado.
+   - Uso de herança de modelos para evitar duplicação de código.
    - Servir arquivos estáticos como imagens, CSS e JavaScript.
+
+8. **Testes**:
+   - Testes end-to-end.
+   - Testes de manipuladores e middleware HTTP.
+   - _Mocking_ de dependências.
+   - Testes de formulários HTML.
+   - Testes de integração.
 
 ## Instalação
 
@@ -105,20 +116,36 @@ O Snippetbox permite que os usuários colem e compartilhem trechos de texto, de 
 7. Crie a tabela de usuários para cadastrar novos usuários:
    ```sh
    CREATE TABLE users (
-   id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-   name VARCHAR(255) NOT NULL,
-   email VARCHAR(255) NOT NULL,
-   hashed_password CHAR(60) NOT NULL,
-   created DATETIME NOT NULL
+      id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+      name VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NOT NULL,
+      hashed_password CHAR(60) NOT NULL,
+      created DATETIME NOT NULL
    );
 
    ALTER TABLE users ADD CONSTRAINT users_uc_email UNIQUE (email);
    ```
 
-8. Inicie o servidor:
+8. Configure o banco de dados de teste:
+   ```sh
+   CREATE DATABASE test_snippetbox CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+   CREATE USER 'test_web'@'localhost';
+   GRANT CREATE, DROP, ALTER, INDEX, SELECT, INSERT, UPDATE, DELETE ON test_snippetbox.* TO 'test_web'@'localhost';
+   ALTER USER 'test_web'@'localhost' IDENTIFIED BY 'pass';
+   ```
+
+9. Inicie o servidor:
    ```sh
    go run cmd/web/*
    ```
+
+## Bibliotecas Utilizadas
+- **[github.com/julienschmidt/httprouter](https://github.com/julienschmidt/httprouter)** - Roteador de requisições HTTP de alto desempenho.
+- **[github.com/justinas/alice](https://github.com/justinas/alice)** - Encadeamento de middlewares de maneira simples para Go.
+- **[github.com/justinas/nosurf](https://github.com/justinas/nosurf)** - Middleware de proteção contra CSRF para Go.
+- **[github.com/go-playground/form](https://github.com/go-playground/form)** - Decodifica valores de URL para tipos Go e vice-versa.
+- **[github.com/alexedwards/scs](https://github.com/alexedwards/scs/)** - Gerenciamento de sessões HTTP para Go.
 
 ## Tecnologias Usadas
 * Go
