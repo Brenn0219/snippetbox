@@ -9,10 +9,14 @@ O Snippetbox permite que os usuários colem e compartilhem trechos de texto, de 
 ## Funcionalidades
 
 1. **Criação e Visualização de Snippets**:
-   - Usuários podem criar snippets de texto e visualizá-los através da aplicação.
+   - Usuários podem criar e visualizar snippets de texto na aplicação.
+   - Apenas usuários cadastrados podem criar novos snippets. Usuários não autenticados podem apenas visualizar os snippets existentes.
 
 2. **Gerenciamento de Usuários**:
-   - Implementação de contas de usuário, onde apenas usuários registrados podem criar snippets.
+   - Implementação de contas de usuário para controle de acesso.
+   - Gerenciamento de sessões para autenticação contínua e segura.
+   - Autenticação com hashing de senha para proteger credenciais.
+   - Autorização para garantir que apenas usuários autenticados possam criar e gerenciar snippets.
 
 3. **Segurança**:
    - Proteção contra CSRF em formulários.
@@ -37,6 +41,7 @@ O Snippetbox permite que os usuários colem e compartilhem trechos de texto, de 
    - Servir arquivos estáticos como imagens, CSS e JavaScript.
 
 8. **Testes**:
+   - Testes unitário.
    - Testes end-to-end.
    - Testes de manipuladores e middleware HTTP.
    - _Mocking_ de dependências.
