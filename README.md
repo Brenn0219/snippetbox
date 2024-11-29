@@ -161,7 +161,13 @@ O Snippetbox permite que os usuários colem e compartilhem trechos de texto, de 
 
 ## Recursos
 
-- [Livro "Let's Go" de Alex Edwards](https://lets-go.alexedwards.net/)
+Para acessar o conteúdo do livro **"Let's Go" de Alex Edwards**, você pode:
+
+1. Utilizar o [EPUB Reader Online](https://epub-reader.online/#).  
+   Basta carregar o arquivo disponível na pasta `doc` do repositório para começar a leitura.
+
+2. Acessar diretamente o site oficial:  
+   - [Livro "Let's Go" de Alex Edwards](https://lets-go.alexedwards.net/)
 
 ## Licença
 
